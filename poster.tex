@@ -1,46 +1,138 @@
-\documentclass[25pt, a0paper, portrait]{tikzposter}
+\documentclass[
+    25pt,
+    a0paper,
+    portrait,
+    colspace=2cm,
+    blockverticalspace=2cm
+]{tikzposter}
 
+% \usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{bm}
 \usepackage{blindtext}
 
-\title{Quantum Fisher Information and Topological Phases}
+\usetikzlibrary{patterns}
+
+% Turn off the tikzposter watermark
+% \tikzposterlatexaffectionproofoff
+
+%% THEMING
+%%--------------------------------------------------
+\input{theme}
+\newcommand{\Note}[1]{
+    \vspace*{0.5cm}
+    \hfill \textit{#1}
+}
+
+%% TITLE
+%%--------------------------------------------------
+\title{QUANTUM FISHER INFORMATION AND TOPOLOGICAL PHASES}
 % FIXME:
 %   Non è il titolo dell'abstract mandato.
 %   Il titolo originale: "Quantum Fisher information as a tool for detecting topological spaces"
 %   non ci sta nel riquadro
 \author{Sunny Pradhan, Federico dell'Anna, Elisa Ercolessi}
 \institute{University of Bologna}
-% \usetheme{Simple}
+
+
 
 
 \begin{document}
 
-\maketitle[width=0.9\textwidth]
+\maketitle
 
-\block{Introduction}{
-    \blindtext
-    }
+\block[bodyverticalshift=5mm]{}{\Large
+We study the Quantum Fisher Information (QFI) in one-dimensional models as a tool for measuring the Multipartite Entanglement (ME), which can give valuable information about the existence of topological phases.
+We show that the scaling of the QFI of strictly non-local observables can be used for characterizing the phase diagrams and, in particular, for detecting topological phases, where it scales maximally.
+}
+
 
 \begin{columns}
     \column{0.5}
-    \block{Multipartite Entanglement}{
-        \blindtext
+    \myblock{MULTIPARTITE ENTANGLEMENT}{
+        \innerblock{$n$--separability}{
+            \begin{equation*}
+                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_n}
+            \end{equation*}
+
+            \Note{factorizable in $n$ terms}
+        }
+        \vspace*{1cm}
+        \innerblock{$k$--producibility}{
+            \begin{equation*}
+                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_m}
+            \end{equation*}
+
+            \Note{each term involves at most $k$ elements}
+        }
     }
-    \block{Quantum Fisher Information}{
-        \blindtext
-    }
-    \block{Criterion for Entanglement}{
-        \blindtext
+    \myblock{QUANTUM FISHER INFORMATION}{
+        Unitary transformation with \textbf{unknown angle} $\theta$
+        $$\rho \to \rho(\theta) = e^{-i \theta \hat{H}} \rho e^{i \theta \hat{H}}$$
+
+        Angle $\theta$ to be estimated with $m$ measurements and operators $\{\hat{E}_{\mu}\}$
+
+        \vspace*{1cm}
+
+        \innerblock{Fisher information}{
+            \begin{equation*}
+                F[\rho(\theta), \{\hat{E}_{\mu}\}] = \sum_{\mu} \frac{ [\partial_{\theta} P(\mu|\theta)]^2}{P(\mu | \theta)}
+                \qquad
+                P(\mu | \theta) = \Tr[\rho(\theta) \hat{E}_{\mu}]
+            \end{equation*}
+
+            \Note{$P(\mu | \theta)$ conditional probabilities of a measure $\mu$ given $\theta$}
+        }
+
+        \vspace*{1cm}
+
+        \innerblock{Quantum Fisher information}{
+            \begin{equation*}
+                F_Q[\rho, \hat{H}] = \max_{\{\hat{E}_{\mu}\}} F[\rho(\theta), \{\hat{E}_{\mu}\}]
+            \end{equation*}
+
+            \Note{maximum of $F$ over the set of possible measures $\{\hat{E}_{\mu}\}$}
+        }
     }
 
     \column{0.5}
-    \block{Long-range Kitaev chain}{
-        \blindtext
+    \myblock{LONG-RANGE KITAEV CHAIN}{
+        \innerblock{one-dimensional $p$-wave superconductor}{
+        \begin{equation*}
+            H = \sum_{i} \qty[
+                -t c_i^{\dagger} c_j
+                -\mu \qty( c_j^{\dagger} c_j - \frac{1}{2} )
+                + \frac{\Delta}{2} \sum_{r} \frac{1}{r^{\alpha}} c_j^{\dagger} c_{j+r}
+                + \text{h.c.}
+            ]
+        \end{equation*}
+
+        \Note{long-range coupling $\sim 1/r^{\alpha}$}
+        }
+
+        \begin{tikzfigure}
+            \input{figures/lrk-phases.tex}
+        \end{tikzfigure}
     }
 
-    \block{Bilinear-Biquadratic chain}{
-        \blindtext
+    \myblock{BILINEAR--BIQUADRATIC CHAIN}{
+        \innerblock{Spin-1 chain}{
+            \begin{equation*}
+                H = J \sum_{i} \qty[
+                    \bm{S}_i \cdot \bm{S}_{i+1}
+                    + \beta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )
+                ]
+            \end{equation*}
+        }
+
+        \begin{tikzfigure}
+            \input{figures/blbq-phases.tex}
+        \end{tikzfigure}
     }
 
 \end{columns}
-\end{document}
 
+
+\end{document}

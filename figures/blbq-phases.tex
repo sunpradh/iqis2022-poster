@@ -1,0 +1,34 @@
+\begin{tikzpicture}[
+        scale=5,
+        font=\normalsize,
+        dot/.style = {circle, inner sep=0pt, minimum size=10pt, fill=black},
+        line width=2pt
+    ]
+    \node (A) at (45:1)  [dot, label=right:{$\frac{\pi}{4}$}] {};
+    \node (C) at (-45:1) [dot, label=right:{$-\frac{\pi}{4}$}] {};
+    \node (D) at (-90:1) [dot, label=below:{$-\frac{\pi}{2}$}] {};
+    \node (E) at (135:1) [dot, label=above:{$\frac{3 \pi}{4}$}] {};
+    \node (H) at (0:1)   [dot, label=right:Heisenberg] {};
+    \node (K) at (-18.44:1) [dot, label=right:AKLT] {};
+
+    \draw (0,0) circle [radius=1];
+
+    \draw[fill=Blue40, fill opacity=0.7] (0,0) -- (C) arc (-45:45:1) -- (0,0);
+    \draw[fill=Green, fill opacity=0.7] (0,0) -- (D) arc (-90:-45:1) -- (0,0);
+    \draw[fill=Red, fill opacity=0.7] (0,0) -- (A) arc (45:135:1) -- (0,0);
+
+    \node at (45:1)  [dot] {};
+    \node at (-45:1) [dot] {};
+    \node at (-90:1) [dot] {};
+    \node at (135:1) [dot] {};
+    \node at (0:1)   [dot] {};
+    \node at (-18.44:1) [dot] {};
+
+    \path (A) arc (45:135:1) node [below=10pt, midway] {Dimer};
+    \path (C) arc (-45:45:1) node [left=6pt, midway] {Haldane};
+    \path (D) arc (-90:-225:1) node [above right=10pt, midway] {Ferro};
+    \path (C) arc (-45:-90:1) node [above=8pt, pos=0.6] {Trimer};
+
+    \draw[->] (10:1.1) arc (10:30:1.1) node [midway, right] {$\theta$};
+\end{tikzpicture}
+

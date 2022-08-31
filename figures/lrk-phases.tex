@@ -1,0 +1,47 @@
+\begin{tikzpicture}[
+    scale=3,
+    font=\normalsize,
+    massless/.style = {fill=Green, fill opacity=0.8},
+    trivial/.style = {fill=Blue20, fill opacity=0.8},
+    massive/.style = {fill=Orange, fill opacity=0.8},
+    etichetta/.style = {fill=white, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
+    ]
+
+    %%% Phases
+    % massless
+    \path[massless] (-2,1) rectangle (2,3);
+    % massive
+    \path[massive]  (-4,1) rectangle (2,0);
+    % trivial
+    \path[trivial] (-4,1) rectangle (-2,3);
+    \path[trivial] (2,0) rectangle (4,3);
+
+
+    % distinction between the different sectors
+    \draw[dotted, very thick] (-4.2,1) -- (4.2,1) node [right] {$\alpha = 1$};
+
+    % critical line
+    \draw[line width=5] (2,0) -- (2,3);
+    \draw[dotted]     (-2,0) -- (-2,1);
+    \draw[line width=5] (-2,1) -- (-2,3);
+
+    %%% Axis
+    \draw[ultra thick, ->] (0,0) -- (0,3.2) node [above] {$\alpha$};
+    \draw[ultra thick, ->] (-4.2,0) -- (4.2,0) node [right] {$\mu$};
+    \draw (2,0) node [below] {$2$};
+    \draw (-2,0) node [below] {$-2$};
+    \draw (0,0) node [below] {$0$};
+
+
+    % labels
+    \draw (0,0.5)     node [etichetta, fill=white] {topological massive};
+    \draw (-3,2.25)   node [etichetta, fill=white] {trivial};
+    \draw (3,2.25)    node [etichetta, fill=white] {trivial};
+    \draw (0,2.25)    node [etichetta, fill=white] {topological massless};
+
+    \draw[<-] (2,3.1) -- (2,3.3) node [above] {critical};
+    \draw[<-] (-2,3.1) -- (-2,3.3) node [above] {critical};
+
+    \draw (-4, 2)    node [anchor=south, etichetta, rotate=90] {\textbf{Majorana}};
+    \draw (-4, 0.5)  node [anchor=south, etichetta, rotate=90] {\textbf{Dirac}};
+\end{tikzpicture}

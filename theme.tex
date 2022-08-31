@@ -1,0 +1,195 @@
+%% THEMING
+%%--------------------------------------------------
+
+%%--------------------------------------------------
+%% FONTS
+%%--------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[sfdefault]{plex-sans}
+\usepackage{txfonts}
+
+
+%&--------------------------------------------------
+%& COLORS
+%%--------------------------------------------------
+
+%%% IBM Carbon colorscheme
+%%% https://carbondesignsystem.com/guidelines/color/overview/
+\definecolor{Foreground}{RGB}{22, 22, 22}
+\definecolor{Background}{RGB}{244, 244, 244}
+\definecolor{Blue100}{RGB}{0, 17, 65}
+\definecolor{Blue90}{RGB}{0, 29, 108}
+\definecolor{Blue80}{RGB}{0, 45, 156}
+\definecolor{Blue70}{RGB}{0, 67, 206}
+\definecolor{Blue60}{RGB}{15, 95, 254}
+\definecolor{Blue50}{RGB}{69, 137, 255}
+\definecolor{Blue40}{RGB}{120, 169, 255}
+\definecolor{Blue30}{RGB}{166, 200, 255}
+\definecolor{Blue20}{RGB}{208, 226, 255}
+\definecolor{Blue10}{RGB}{237, 245, 255}
+\definecolor{Red}{RGB}{218, 30, 40}
+\definecolor{Orange}{RGB}{255, 131, 43}
+\definecolor{Yellow}{RGB}{253, 220, 105}
+\definecolor{Green}{RGB}{25, 128, 56}
+\definecolor{Grey10}{RGB}{224, 224, 224}
+\definecolor{Grey20}{RGB}{198, 198, 198}
+\definecolor{Grey30}{RGB}{168, 168, 168}
+\definecolor{Grey40}{RGB}{141, 141, 141}
+\definecolor{Grey50}{RGB}{111, 111, 111}
+\definecolor{Grey60}{RGB}{82, 82, 82}
+\definecolor{Grey70}{RGB}{57, 57, 57}
+\definecolor{Grey80}{RGB}{38, 38, 38}
+\definecolor{Grey90}{RGB}{22, 22, 22}
+\definecolor{White}{RGB}{255, 255, 255}
+\definecolor{Black}{RGB}{0, 0, 0}
+
+\definecolorstyle{MyColorStyle}{
+    % Random colors
+    \definecolor{colorOne}{named}{Blue70}
+    \definecolor{colorTwo}{named}{Red}
+    \definecolor{colorThree}{named}{Green}
+}{
+    % Background Colors
+    \colorlet{backgroundcolor}{White}
+    \colorlet{framecolor}{Grey50}
+    % Title Colors
+    \colorlet{titlefgcolor}{Background}
+    \colorlet{titlebgcolor}{colorOne}
+    % Block Colors
+    \colorlet{blocktitlebgcolor}{Background}
+    \colorlet{blocktitlefgcolor}{colorOne}
+    \colorlet{blockbodybgcolor}{Background}
+    \colorlet{blockbodyfgcolor}{Foreground}
+    % Innerblock Colors
+    \colorlet{innerblocktitlebgcolor}{white}
+    \colorlet{innerblocktitlefgcolor}{colorTwo}
+    \colorlet{innerblockbodybgcolor}{White}
+    \colorlet{innerblockbodyfgcolor}{Foreground}
+    % Note colors
+    \colorlet{notefgcolor}{black}
+    \colorlet{notebgcolor}{colorTwo!50!white}
+    \colorlet{noteframecolor}{colorTwo}
+}
+
+\usecolorstyle{MyColorStyle}
+
+
+%%--------------------------------------------------
+%% BACKGROUND
+%%--------------------------------------------------
+\definebackgroundstyle{MyBackground}{
+    \fill[
+        backgroundcolor,
+        inner sep=0pt,
+        line width=0pt,
+    ] (bottomleft) rectangle (topright);
+}
+
+\usebackgroundstyle{MyBackground}
+
+
+%%--------------------------------------------------
+%% BLOCKS
+%%--------------------------------------------------
+\defineblockstyle{MyBlockStyle}{
+    titlewidthscale=1,
+    bodywidthscale=1,
+    titlecenter,
+    titleoffsetx=0pt,
+    titleoffsety=10pt,
+    bodyoffsetx=0mm,
+    bodyoffsety=15mm,
+    bodyverticalshift=5mm,
+    roundedcorners=0,
+    linewidth=1pt,
+    titleinnersep=1.5cm,
+    bodyinnersep=1.5cm
+}{
+    \ifBlockHasTitle
+        % Body
+        \fill[
+            blockbodybgcolor,
+            rounded corners=\blockroundedcorners,
+            line width=\blocklinewidth
+        ] (blockbody.south west) rectangle (blockbody.north east);
+        % Block Title
+        \fill[
+            fill=blockbodybgcolor,
+            rounded corners=\blockroundedcorners,
+            line width=\blocklinewidth
+        ] (blocktitle.south west) rectangle (blocktitle.north east);
+    \else
+        % Only body
+        \fill[
+            blockbodybgcolor,
+            rounded corners=\blockroundedcorners,
+            line width=2\blocklinewidth
+        ] (blockbody.south west) rectangle (blockbody.north east);
+    \fi
+}
+
+\defineinnerblockstyle{MyInnerBlockStyle}{
+    titlewidthscale=1,
+    bodywidthscale=1,
+    titleleft,
+    titleoffsetx=0pt,
+    titleoffsety=0pt,
+    bodyoffsetx=0mm,
+    bodyoffsety=0mm,
+    bodyverticalshift=-10mm,
+    roundedcorners=0,
+    linewidth=1pt,
+    titleinnersep=1cm,
+    bodyinnersep=1cm
+}{
+    % Body
+    \fill[
+        innerblockbodybgcolor,
+        rounded corners=0,
+        line width=\innerblocklinewidth
+    ] (innerblockbody.south west) rectangle (innerblockbody.north east);
+    % Block Title
+    \fill[
+        innerblocktitlebgcolor,
+        rounded corners=0,
+        line width=\innerblocklinewidth
+    ] (innerblocktitle.south west) rectangle (innerblocktitle.north east);
+}
+
+\useblockstyle{MyBlockStyle}
+\useinnerblockstyle{MyInnerBlockStyle}
+\newcommand{\myblock}[2]{\block{{\LARGE \bfseries \sffamily #1}}{\Large #2}}
+
+
+%%--------------------------------------------------
+%% TITLE
+%%--------------------------------------------------
+\definetitlestyle{MyTitle}{
+    width=\textwidth,
+    roundedcorners=0,
+    linewidth=4pt,
+    innersep=1.5cm,
+    titletotopverticalspace=-1mm,
+    titletoblockverticalspace=20mm
+}{
+    \begin{scope}[line width=\titlelinewidth]
+        \fill[
+            fill=Black
+        ] (\titleposleft, \titleposbottom) rectangle (\titleposright, \titlepostop);
+        \draw[color=titlebgcolor, line width=10, shorten <=-3pt, shorten >=-3pt]
+            (\titleposleft, \titleposbottom) -- (\titleposright, \titleposbottom);
+    \end{scope}
+}
+\usetitlestyle{MyTitle}
+
+\settitle{
+    \centering
+    \vbox{
+        \vspace*{1cm}
+        \centering \color{titlefgcolor} {\sffamily \bfseries \Huge \@title \par}
+        \vspace*{1.5cm}
+        {\sffamily \LARGE \@author \hspace{1cm} ({\slshape \@institute})}
+    }
+}
+
+% vim: nospell

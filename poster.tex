@@ -1,3 +1,4 @@
+% !TEX TS-program = xelatex
 \documentclass[
     25pt,
     a0paper,
@@ -13,18 +14,27 @@
 \usepackage{bm}
 \usepackage{blindtext}
 
-\usetikzlibrary{patterns}
-
 % Turn off the tikzposter watermark
 % \tikzposterlatexaffectionproofoff
 
 %% THEMING
 %%--------------------------------------------------
 \input{theme}
-\newcommand{\Note}[1]{
-    \vspace*{0.5cm}
-    \hfill \textit{#1}
+
+\usetikzlibrary{patterns, positioning}
+\tikzset{
+    nota/.style={align=center, fill=Grey10, inner sep=0.5cm, font=\normalsize},
+    titolo nota/.style={align=center, color=Blue50, font=\normalsize}
 }
+\newcommand{\InnerNote}[1]{
+    \vspace*{0.3cm}
+    {\hfill \large \textit{#1}}
+}
+\newcommand{\TitoloNota}[2]{\node [above=0.2cm of #1, titolo nota] {\textbf{#2}}; }
+
+\newcommand{\Highlight}[1]{\textcolor{Blue50}{\textbf{#1}}}
+
+
 
 %% TITLE
 %%--------------------------------------------------
@@ -33,7 +43,7 @@
 %   Non è il titolo dell'abstract mandato.
 %   Il titolo originale: "Quantum Fisher information as a tool for detecting topological spaces"
 %   non ci sta nel riquadro
-\author{Sunny Pradhan, Federico dell'Anna, Elisa Ercolessi}
+\author{Sunny \textbf{Pradhan}, Federico \textbf{dell'Anna}, Elisa \textbf{Ercolessi}}
 \institute{University of Bologna}
 
 
@@ -50,29 +60,62 @@ We show that the scaling of the QFI of strictly non-local observables can be use
 
 
 \begin{columns}
-    \column{0.5}
+    \column{0.45}
+    %----------------------------------------------------------------------------------------------------
     \myblock{MULTIPARTITE ENTANGLEMENT}{
-        \innerblock{$n$--separability}{
+        Pure state $\ket{\psi}$ of a quantum system with $N$ parts \\[5pt]
+        \innerblock{n--separability}{\Large
             \begin{equation*}
-                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_n}
+                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_n},
+                \qquad n \leq N
             \end{equation*}
 
-            \Note{factorizable in $n$ terms}
+            \InnerNote{factorizable in $n$ terms $\ket{\phi_i}$}
         }
         \vspace*{1cm}
-        \innerblock{$k$--producibility}{
+        \innerblock{k--party entanglement}{\Large
             \begin{equation*}
-                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_m}
+                \ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2} \otimes \cdots \otimes \ket{\phi_m},
+                \quad m \geq N/k
             \end{equation*}
 
-            \Note{each term involves at most $k$ elements}
+            \InnerNote{each term $\ket{\phi_i}$ involves at most $k$ elements}
         }
+        \vspace*{0.5cm}
+        \begin{tikzpicture}
+            \node (A) at (0,0) [nota] {if $\ket{\psi}$ is not producible \\ by $(k-1)$-party entanglement};
+            \node (B) [right=1.5cm of A, nota] {$1$-party entangled\\($N$-separable)};
+            \node (C) [right=1.5cm of B, nota] {$N$-party entangled\\($1$-separable)};
+            \TitoloNota{B}{fully separable}
+            \TitoloNota{A}{genuine k-party entanglement}
+            \TitoloNota{C}{maximally entangled}
+        \end{tikzpicture}
     }
+
+
+
+
+    %----------------------------------------------------------------------------------------------------
     \myblock{QUANTUM FISHER INFORMATION}{
-        Unitary transformation with \textbf{unknown angle} $\theta$
-        $$\rho \to \rho(\theta) = e^{-i \theta \hat{H}} \rho e^{i \theta \hat{H}}$$
+        % Unitary transformation with \textbf{unknown angle} $\theta$
+        \Highlight{PHASE ESTIMATION}
+        \begin{equation*}
+            \rho \to \rho(\theta) = e^{-i \theta \hat{H}} \rho e^{i \theta \hat{H}}
+        \end{equation*}
 
         Angle $\theta$ to be estimated with $m$ measurements and operators $\{\hat{E}_{\mu}\}$
+
+        \vspace*{0.5cm}
+
+        \innerblock{Quantum Cramér-Rao bound}{
+            \begin{equation*}
+                (\Delta \theta)^2 \geq
+                \frac{1}{m F[\rho(\theta), \{\hat{E}_{\mu}\}]} \geq
+                \frac{1}{m F_Q[\rho, \hat{H}]}
+            \end{equation*}
+
+            \InnerNote{limits the precision of the estimation of $\theta$}
+        }
 
         \vspace*{1cm}
 
@@ -83,7 +126,7 @@ We show that the scaling of the QFI of strictly non-local observables can be use
                 P(\mu | \theta) = \Tr[\rho(\theta) \hat{E}_{\mu}]
             \end{equation*}
 
-            \Note{$P(\mu | \theta)$ conditional probabilities of a measure $\mu$ given $\theta$}
+            \InnerNote{$P(\mu | \theta)$ conditional probabilities of a measure $\mu$ given $\theta$}
         }
 
         \vspace*{1cm}
@@ -93,23 +136,61 @@ We show that the scaling of the QFI of strictly non-local observables can be use
                 F_Q[\rho, \hat{H}] = \max_{\{\hat{E}_{\mu}\}} F[\rho(\theta), \{\hat{E}_{\mu}\}]
             \end{equation*}
 
-            \Note{maximum of $F$ over the set of possible measures $\{\hat{E}_{\mu}\}$}
+            \InnerNote{maximum of $F$ over the set of possible measures $\{\hat{E}_{\mu}\}$}
         }
+
+        \vspace*{1cm}
+        For pure states:~~~~$F_Q[\ket{\psi}, \hat{H}] = 4 (\Delta \hat{H})^2 = 4(\ev*{\hat{H}^2}_{\psi} - \ev*{\hat{H}}_{\psi}^2)$
     }
 
-    \column{0.5}
-    \myblock{LONG-RANGE KITAEV CHAIN}{
-        \innerblock{one-dimensional $p$-wave superconductor}{
+    %----------------------------------------------------------------------------------------------------
+    \myblock{ENTANGLEMENT CRITERION}{
+
+        \Highlight{Input state with k-party entanglement}~~~$\rho_{\text{k-ent}}$
+
+        \vspace*{0.5cm}
+        Linear two-mode interferometer:
+        \vspace*{0.5cm}
         \begin{equation*}
-            H = \sum_{i} \qty[
-                -t c_i^{\dagger} c_j
-                -\mu \qty( c_j^{\dagger} c_j - \frac{1}{2} )
-                + \frac{\Delta}{2} \sum_{r} \frac{1}{r^{\alpha}} c_j^{\dagger} c_{j+r}
-                + \text{h.c.}
-            ]
+            \hat{H}_{\text{lin}}
+            = \frac{1}{2} \sum_{j} \vec{n}_j \cdot \vec{\sigma}_j
+            = \frac{1}{2} \sum_{j} \qty( \alpha_j \sigma_j^ x + \beta_j \sigma_j^y + \gamma_j \sigma_j^z )
         \end{equation*}
 
-        \Note{long-range coupling $\sim 1/r^{\alpha}$}
+        \vspace*{0.5cm}
+
+
+        \innerblock{$F_Q$ Criterion}{
+            \begin{equation*}
+                F_Q[\rho_{\text{k-ent}}, \hat{H}_{\text{lin}}] \leq k N
+            \end{equation*}
+        }
+        \begin{center}
+            \begin{tikzpicture}
+                \node (sep) at (0,0) [nota] {$F_Q[\rho_{\text{sep}}, \hat{H}] \leq N$};
+                \node (max) [nota, right=8cm of sep] {$F_Q[\rho_{\text{max}}, \hat{H}] \leq N^2$};
+                \TitoloNota{sep}{fully separable}
+                \TitoloNota{max}{maximally entangled}
+            \end{tikzpicture}
+        \end{center}
+    }
+
+
+
+    %----------------------------------------------------------------------------------------------------
+    \column{0.55}
+    \myblock{LONG-RANGE KITAEV CHAIN}{
+        \innerblock{one-dimensional $p$-wave superconductor}{
+            \begin{equation*}
+                H = \sum_{i} \qty[
+                    -t c_i^{\dagger} c_j
+                    -\mu \qty( c_j^{\dagger} c_j - \frac{1}{2} )
+                    + \frac{\Delta}{2} \sum_{r} \frac{1}{r^{\alpha}} c_j^{\dagger} c_{j+r}
+                    + \text{h.c.}
+                ]
+            \end{equation*}
+
+            \InnerNote{long-range coupling $\sim 1/r^{\alpha}$}
         }
 
         \begin{tikzfigure}
@@ -117,6 +198,10 @@ We show that the scaling of the QFI of strictly non-local observables can be use
         \end{tikzfigure}
     }
 
+
+
+
+    %----------------------------------------------------------------------------------------------------
     \myblock{BILINEAR--BIQUADRATIC CHAIN}{
         \innerblock{Spin-1 chain}{
             \begin{equation*}

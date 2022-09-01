@@ -12,7 +12,8 @@
 \usepackage{amssymb}
 \usepackage{physics}
 \usepackage{bm}
-\usepackage{blindtext}
+\usepackage{graphicx}
+
 
 % Turn off the tikzposter watermark
 % \tikzposterlatexaffectionproofoff
@@ -30,10 +31,12 @@
     \vspace*{0.3cm}
     {\hfill \large \textit{#1}}
 }
-\newcommand{\TitoloNota}[2]{\node [above=0.2cm of #1, titolo nota] {\textbf{#2}}; }
+\newcommand{\TitoloNota}[2]{\node [above=0.1cm of #1, titolo nota] {\textbf{#2}}; }
 
 \newcommand{\Highlight}[1]{\textcolor{Blue50}{\textbf{#1}}}
 
+\setlength\fboxsep{0pt}
+\newcommand{\FrameImg}[2]{\framebox{\includegraphics[scale=#1]{#2}}}
 
 
 %% TITLE
@@ -160,15 +163,17 @@ We show that the scaling of the QFI of strictly non-local observables can be use
         \vspace*{0.5cm}
 
 
-        \innerblock{$F_Q$ Criterion}{
+        \innerblock{QFI Criterion}{
             \begin{equation*}
                 F_Q[\rho_{\text{k-ent}}, \hat{H}_{\text{lin}}] \leq k N
             \end{equation*}
         }
         \begin{center}
             \begin{tikzpicture}
-                \node (sep) at (0,0) [nota] {$F_Q[\rho_{\text{sep}}, \hat{H}] \leq N$};
-                \node (max) [nota, right=8cm of sep] {$F_Q[\rho_{\text{max}}, \hat{H}] \leq N^2$};
+                \node (density) [nota] at (0,0)  {$f_Q = F_Q / N$};
+                \node (sep) [nota, right=4cm of density] {$f_Q[\rho_{\text{sep}}, \hat{H}] \leq 1$};
+                \node (max) [nota, right=4cm of sep] {$f_Q[\rho_{\text{max}}, \hat{H}] \leq N$};
+                \TitoloNota{density}{QFI density}
                 \TitoloNota{sep}{fully separable}
                 \TitoloNota{max}{maximally entangled}
             \end{tikzpicture}
@@ -190,8 +195,23 @@ We show that the scaling of the QFI of strictly non-local observables can be use
                 ]
             \end{equation*}
 
-            \InnerNote{long-range coupling $\sim 1/r^{\alpha}$}
+            \InnerNote{superconducting long-range coupling $\sim 1/r^{\alpha}$}
         }
+
+        \vspace*{0.5cm}
+
+        \centering
+        \begin{tikzpicture}
+            \node (JW) [nota] at (0,0) {
+                $\sigma_j^+ = c^{\dagger}_j e^{i \pi \sum_{i < j} c_i^{\dagger} c_i}$~~
+                $\sigma_j^- = e^{i \pi \sum_{i < j} c_i^{\dagger} c_i} c_j $
+            };
+            \node (NL) [nota, right=2cm of JW] {$\hat{H}_{\rho} = \sum_{j} \sigma^{\rho}_j, \quad \rho=x,y$};
+            \node (scaling) [nota, right=2cm of NL] {$f_Q[\ket{\text{gs}}, \hat{H}_{\rho}] \sim L^{b}$};
+            \TitoloNota{JW}{Jordan-Wigner transformation}
+            \TitoloNota{NL}{non-local operators}
+            \TitoloNota{scaling}{QFI scaling}
+        \end{tikzpicture}
 
         \begin{tikzfigure}
             \input{figures/lrk-phases.tex}

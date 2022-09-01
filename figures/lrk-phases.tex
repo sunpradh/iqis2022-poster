@@ -1,10 +1,12 @@
 \begin{tikzpicture}[
-    scale=3,
+    scale=2.5,
     font=\normalsize,
+    punto/.style = {circle, inner sep=0pt, minimum size=5pt, fill=black},
     massless/.style = {fill=Green, fill opacity=0.8},
     trivial/.style = {fill=Blue20, fill opacity=0.8},
     massive/.style = {fill=Orange, fill opacity=0.8},
-    etichetta/.style = {fill=white, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
+    etichetta/.style = {fill=white, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt},
+    etichetta spettro/.style = {above=-0.25cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
     ]
 
     %%% Phases
@@ -17,13 +19,13 @@
     \path[trivial] (2,0) rectangle (4,3);
 
 
-    % distinction between the different sectors
-    \draw[dotted, very thick] (-4.2,1) -- (4.2,1) node [right] {$\alpha = 1$};
+    % sector separator
+    \draw[dashed, line width=3pt] (-4.2,1) -- (4.4,1) node [pos=0.95, below, etichetta] {$\alpha = 1$};
 
     % critical line
-    \draw[line width=5] (2,0) -- (2,3);
+    \draw[line width=7] (2,0) -- (2,3);
     \draw[dotted]     (-2,0) -- (-2,1);
-    \draw[line width=5] (-2,1) -- (-2,3);
+    \draw[line width=7] (-2,1) -- (-2,3);
 
     %%% Axis
     \draw[ultra thick, ->] (0,0) -- (0,3.2) node [above] {$\alpha$};
@@ -34,14 +36,40 @@
 
 
     % labels
-    \draw (0,0.5)     node [etichetta, fill=white] {topological massive};
-    \draw (-3,2.25)   node [etichetta, fill=white] {trivial};
-    \draw (3,2.25)    node [etichetta, fill=white] {trivial};
-    \draw (0,2.25)    node [etichetta, fill=white] {topological massless};
+    \node [etichetta] (massless) at (0,2)  {topol.~massless};
+    \node [etichetta] (trivial1) at (-3,2.25) {trivial};
+    \node [etichetta] (trivial2) at (3,2.25)  {trivial};
+    \node [etichetta] (massive)  at (-1,0.5)  {topol.~massive};
 
-    \draw[<-] (2,3.1) -- (2,3.3) node [above] {critical};
-    \draw[<-] (-2,3.1) -- (-2,3.3) node [above] {critical};
+    \draw[<-, ultra thick] (2,3.1) -- (2,3.3) node [above] {critical};
+    \draw[<-, ultra thick] (-2,3.1) -- (-2,3.3) node [above] {critical};
 
     \draw (-4, 2)    node [anchor=south, etichetta, rotate=90] {\textbf{Majorana}};
     \draw (-4, 0.5)  node [anchor=south, etichetta, rotate=90] {\textbf{Dirac}};
+
+    % energy plots
+    \node[anchor=west] (MajSpec) at (5, 2) {\FrameImg{0.8}{figures/majorana_spectrum.pdf}};
+    \node[etichetta spettro] at (MajSpec.north) {Majorana sector, $\alpha = 2$};
+    \node[anchor=west] (DiracSpec) at (5, -1.3) {\FrameImg{0.8}{figures/dirac_spectrum.pdf}};
+    \node[etichetta spettro] at (DiracSpec.north) {Dirac sector, $\alpha = 0.7$};
+
+    \draw[ultra thick] (massless.south east) edge[->, bend right=20] (MajSpec.west);
+    \draw[ultra thick] (massive.south east)  edge[->, bend right=20] (DiracSpec.west);
+
+    % Annotate Majorana plot
+    \begin{scope}[xshift=5cm, yshift=2cm]
+        \node (MasslessEdge) [etichetta, font=\tiny, anchor=south] at (2.5, -0.30) {\textbf{massless} edge state};
+        \draw[ultra thick, ->] (MasslessEdge.south) -- ++(0,-0.3);
+        \node[font=\tiny] at (2.5, 0.95) {\textbf{topological}};
+        \node[font=\tiny] at (1.0, 0.95) {trivial};
+        \node[font=\tiny] at (4.0, 0.95) {trivial};
+    \end{scope}
+
+    % Annotate Dirac plot
+    \begin{scope}[xshift=5cm, yshift=-1.3cm]
+        \node (MassiveEdge) [etichetta, font=\tiny, anchor=south] at (2.5, 0.2) {\textbf{massive} edge state};
+        \draw[ultra thick, ->] (MassiveEdge.south west) -- ++(-0.17, -0.17);
+        \node[font=\tiny] at (2.4, 0.95) {\textbf{topological}};
+        \node[font=\tiny] at (4.0, 0.95) {trivial};
+    \end{scope}
 \end{tikzpicture}

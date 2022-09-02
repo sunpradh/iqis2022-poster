@@ -2,20 +2,28 @@
         scale=5,
         font=\normalsize,
         dot/.style = {circle, inner sep=0pt, minimum size=10pt, fill=black},
-        line width=2pt
+        line width=2pt,
+        etichetta grafico/.style = {above=0.1cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt},
+        sfondo grafico/.style = {fill=white, draw=black, thin, inner sep=5pt}
     ]
-    \node (A) at (45:1)  [dot, label=right:{$\frac{\pi}{4}$}] {};
-    \node (C) at (-45:1) [dot, label=right:{$-\frac{\pi}{4}$}] {};
-    \node (D) at (-90:1) [dot, label=below:{$-\frac{\pi}{2}$}] {};
-    \node (E) at (135:1) [dot, label=above:{$\frac{3 \pi}{4}$}] {};
-    \node (H) at (0:1)   [dot, label=right:Heisenberg] {};
-    \node (K) at (-18.44:1) [dot, label=right:AKLT] {};
+    \node (A) at (45:1)  [dot] {};
+    \node (C) at (-45:1) [dot] {};
+    \node (D) at (-90:1) [dot] {};
+    \node (E) at (135:1) [dot] {};
+    \node (H) at (0:1)   [dot] {};
+    \node (K) at (-18.44:1) [dot] {};
+    \node[above right] at (A) {$\pi/4$};
+    \node[below right] at (C) {$-\pi/4$};
+    \node[below]       at (D) {$-\pi/2$};
+    \node[above left]  at (E) {$3 \pi / 4$};
+    \node[right]       at (H) {Heisenberg};
+    \node[right]       at (K) {AKLT};
 
     \draw (0,0) circle [radius=1];
 
     \draw[fill=Blue40, fill opacity=0.7] (0,0) -- (C) arc (-45:45:1) -- (0,0);
-    \draw[fill=Green, fill opacity=0.7] (0,0) -- (D) arc (-90:-45:1) -- (0,0);
-    \draw[fill=Red, fill opacity=0.7] (0,0) -- (A) arc (45:135:1) -- (0,0);
+    \draw[fill=Green, fill opacity=0.5] (0,0) -- (D) arc (-90:-45:1) -- (0,0);
+    \draw[fill=Red, fill opacity=0.5] (0,0) -- (A) arc (45:135:1) -- (0,0);
 
     \node at (45:1)  [dot] {};
     \node at (-45:1) [dot] {};
@@ -29,6 +37,27 @@
     \path (D) arc (-90:-225:1) node [above right=10pt, midway] {Ferro};
     \path (C) arc (-45:-90:1) node [above=8pt, pos=0.6] {Trimer};
 
-    \draw[->] (10:1.1) arc (10:30:1.1) node [midway, right] {$\theta$};
+    \draw[freccia] (10:1.1) arc (10:35:1.1) node [midway, right] {$\theta = \tan^{-1} \beta$};
+
+    % Disegni diagrammi di fase
+    \node (AKLTstate) [anchor=west] at (2.5, 0.2) {\input{figures/blbq_valence_aklt.tex} };
+    \node [etichetta grafico, above=-1.25cm] at (AKLTstate.north east) {AKLT state};
+    \node (DimerState) [anchor=west] at (2.5, -0.8) {\input{figures/blbq_dimer_state.tex} };
+    \node [etichetta grafico] at (DimerState.north east) {Dimer state};
+
+    % Grafico QFI vs beta
+    \node[anchor=north, sfondo grafico] at (0, -1.75) (VarBeta)
+        {\input{figures/blbq_variable_beta.tex}};
+    \node[etichetta grafico] at (VarBeta.north)
+        {\textbf{QFI density ~vs~ $\bm{\beta}$}};
+
+    % Grafici QFI nella fase Haldane e beta=1
+    \node[right=1cm of VarBeta.north east, anchor=north west, sfondo grafico]
+        (Haldane) {\input{figures/blbq_scaling_haldane.tex} };
+    \node[right=1cm of Haldane.north east, anchor=north west, sfondo grafico]
+        (Beta1) {\input{figures/blbq_scaling_beta_1.tex} };
+    \node[etichetta grafico] at (Haldane.north) {Inside \textbf{Haldane phase}};
+    \node[etichetta grafico] at (Beta1.north) {\textbf{Critical point} $\beta = 1$ ($\theta = \pi/4$)};
+
 \end{tikzpicture}
 

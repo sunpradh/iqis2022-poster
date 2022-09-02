@@ -1,0 +1,23 @@
+\begin{tikzpicture}[
+        scale=1.5,
+        font=\tiny,
+        ]
+    \begin{axis}[
+        height=5cm,
+        width=8cm,
+        xmin=0,
+        ymin=0,
+        xlabel={chain size},
+        ylabel={QFI density},
+        x label style={at={(axis description cs:0.5,-0.12)}, anchor=north},
+        y label style={at={(axis description cs:-0.08,.5)}, anchor=south},
+        fit/.style={gray, very thick, domain=1:33, no marks}
+        ]
+        \addplot[Red, mark=diamond*, mark options={scale=2, draw=black, thin}] table {figures/data/beta=1.dat};
+
+        % dati fit ottenuti con scipy.optimize.curve_fit
+        \addplot[fit] {0.2299 + 0.8046*(x^0.4391)} node [midway, below=8pt, etichetta] {$\beta=1$};
+
+        \node[etichetta] at (axis description cs: 0.6, 0.3)  {$f_Q \sim L^{0.44}$};
+    \end{axis}
+\end{tikzpicture}

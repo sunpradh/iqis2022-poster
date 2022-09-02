@@ -1,0 +1,28 @@
+\begin{tikzpicture}[
+    font=\footnotesize,
+    cell/.style={ellipse, fill=Blue20, fill opacity=1, draw=black, thin, inner sep=0pt, minimum size=5pt, thick},
+    site/.style={circle, fill=Orange, draw=black, inner sep=0pt, minimum size=0.5cm},
+    hop/.style={line width=3pt},
+    hop2/.style={line width=3pt, dashed}
+    ]
+    % variables
+    % \ncell # cells, \d cell distance, \s same-cell site dist, \ys = yshift of labels
+    \tikzmath{ \ncell=3; \cd = 3; \sd = 1; \ys = -4; }
+
+    % drawing
+    \foreach \i in {0,...,\ncell}
+    {
+        % sites
+        \draw (\i*\cd, 0)     node[anchor=center] (s\i) {};
+        \draw (\i*\cd+\sd, 0) node[anchor=center] (s\i+1) {};
+        % cells
+        \node[draw, cell, fit=(s\i) (s\i+1)] (cell\i) {};
+        \draw (s\i)   node[anchor=center, site] {};
+        \draw (s\i+1) node[anchor=center, site] {};
+        % hopping
+        \draw[hop] (s\i) -- (s\i+1);
+    }
+
+    \draw [-Stealth, ultra thick] (s1) -- ++(0, -1.5) node [below, align=center] {\textbf{Majorana}\\fermion};
+    \draw [-Stealth, ultra thick, shorten <=0.2cm] (cell2) -- ++(0.5, -1.5) node [below, align=center] {Dirac\\fermion};
+\end{tikzpicture}

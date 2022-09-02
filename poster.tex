@@ -13,31 +13,39 @@
 \usepackage{physics}
 \usepackage{bm}
 \usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{multirow}
+\pgfplotsset{compat=1.18}
 
 
 % Turn off the tikzposter watermark
-% \tikzposterlatexaffectionproofoff
+\tikzposterlatexaffectionproofoff
 
 %% THEMING
 %%--------------------------------------------------
 \input{theme}
 
-\usetikzlibrary{patterns, positioning}
+\usetikzlibrary{patterns, positioning, arrows.meta, math}
 \tikzset{
     nota/.style={align=center, fill=Grey10, inner sep=0.5cm, font=\normalsize},
-    titolo nota/.style={align=center, color=Blue50, font=\normalsize}
+    titolo nota/.style={align=center, color=Blue50, font=\normalsize},
+    etichetta/.style = {fill=white, fill opacity=0.9, text opacity=1, text=black, rounded corners, inner sep=5pt},
+    freccia/.style = {arrows = {-Stealth[scale=1.5]}}
 }
 \newcommand{\InnerNote}[1]{
-    \vspace*{0.3cm}
+    \vspace*{0.1cm}
     {\hfill \large \textit{#1}}
 }
 \newcommand{\TitoloNota}[2]{\node [above=0.1cm of #1, titolo nota] {\textbf{#2}}; }
-
 \newcommand{\Highlight}[1]{\textcolor{Blue50}{\textbf{#1}}}
-
-\setlength\fboxsep{0pt}
 \newcommand{\FrameImg}[2]{\framebox{\includegraphics[scale=#1]{#2}}}
+\setlength\fboxsep{0pt}
 
+
+\renewcommand{\cos}{\mathsf{cos}}
+\renewcommand{\sin}{\mathsf{sin}}
+\renewcommand{\tan}{\mathsf{tan}}
+\renewcommand{\Tr}{\mathsf{Tr}}
 
 %% TITLE
 %%--------------------------------------------------
@@ -57,8 +65,8 @@
 \maketitle
 
 \block[bodyverticalshift=5mm]{}{\Large
-We study the Quantum Fisher Information (QFI) in one-dimensional models as a tool for measuring the Multipartite Entanglement (ME), which can give valuable information about the existence of topological phases.
-We show that the scaling of the QFI of strictly non-local observables can be used for characterizing the phase diagrams and, in particular, for detecting topological phases, where it scales maximally.
+We study the quantum Fisher information in one-dimensional models as a tool for measuring the multipartite entanglement, which can give valuable information about the existence of topological phases.
+We show that the scaling of quantum fisher information of strictly non-local observables can be used for characterizing the phase diagrams and, in particular, for detecting topological phases.
 }
 
 
@@ -116,8 +124,6 @@ We show that the scaling of the QFI of strictly non-local observables can be use
                 \frac{1}{m F[\rho(\theta), \{\hat{E}_{\mu}\}]} \geq
                 \frac{1}{m F_Q[\rho, \hat{H}]}
             \end{equation*}
-
-            \InnerNote{limits the precision of the estimation of $\theta$}
         }
 
         \vspace*{1cm}
@@ -129,17 +135,15 @@ We show that the scaling of the QFI of strictly non-local observables can be use
                 P(\mu | \theta) = \Tr[\rho(\theta) \hat{E}_{\mu}]
             \end{equation*}
 
-            \InnerNote{$P(\mu | \theta)$ conditional probabilities of a measure $\mu$ given $\theta$}
+            \InnerNote{$P(\mu | \theta)$ probabilities of a measure with value $\mu$ given $\theta$}
         }
 
         \vspace*{1cm}
 
         \innerblock{Quantum Fisher information}{
             \begin{equation*}
-                F_Q[\rho, \hat{H}] = \max_{\{\hat{E}_{\mu}\}} F[\rho(\theta), \{\hat{E}_{\mu}\}]
+                F_Q[\rho, \hat{H}] = \underset{\{\hat{E}_{\mu}\}}{\mathsf{max}} \, F[\rho(\theta), \{\hat{E}_{\mu}\}]
             \end{equation*}
-
-            \InnerNote{maximum of $F$ over the set of possible measures $\{\hat{E}_{\mu}\}$}
         }
 
         \vspace*{1cm}
@@ -200,22 +204,64 @@ We show that the scaling of the QFI of strictly non-local observables can be use
 
         \vspace*{0.5cm}
 
-        \centering
+        {\centering
         \begin{tikzpicture}
             \node (JW) [nota] at (0,0) {
                 $\sigma_j^+ = c^{\dagger}_j e^{i \pi \sum_{i < j} c_i^{\dagger} c_i}$~~
                 $\sigma_j^- = e^{i \pi \sum_{i < j} c_i^{\dagger} c_i} c_j $
             };
-            \node (NL) [nota, right=2cm of JW] {$\hat{H}_{\rho} = \sum_{j} \sigma^{\rho}_j, \quad \rho=x,y$};
-            \node (scaling) [nota, right=2cm of NL] {$f_Q[\ket{\text{gs}}, \hat{H}_{\rho}] \sim L^{b}$};
+            \node (NL) [nota, right=1cm of JW] {$\hat{H}_{\rho} = \sum_{j} \sigma^{\rho}_j, \quad \rho=x,y$};
+            \node (scaling) [nota, right=1cm of NL] {
+                $f_Q[\ket{\text{gs}}, \hat{H}_{\rho}] \sim \sum_{r=1}^{L} C_{\rho}(r) $
+            };
             \TitoloNota{JW}{Jordan-Wigner transformation}
             \TitoloNota{NL}{non-local operators}
-            \TitoloNota{scaling}{QFI scaling}
-        \end{tikzpicture}
+            \TitoloNota{scaling}{QFI from correlators}
+        \end{tikzpicture}}
 
-        \begin{tikzfigure}
+        \vspace*{0.5cm}
+        \begin{minipage}[t]{25cm}
             \input{figures/lrk-phases.tex}
-        \end{tikzfigure}
+        \end{minipage}
+        \begin{minipage}[t]{15cm}
+            \begin{tikzpicture}
+                \node [nota] (determinants) at (0, 0) {
+                    $C_{\rho}(R) = \ev*{\sigma^{\rho}_1 \sigma^{\rho}_{1+R}} = \det T_R(\gamma^{\rho})$\\[1cm]
+                    $
+                        T_R(\gamma) = \begin{pmatrix}
+                            \gamma_{0} & \gamma_{-1} & \gamma_{-2} & \cdots & \gamma_{1-N} \\
+                            \gamma_{1} & \gamma_{ 0} & \gamma_{-1} & \cdots & \gamma_{2-N} \\
+                            \gamma_{2} & \gamma_{ 1} & \gamma_{ 0} & \cdots & \gamma_{3-N} \\
+                            \vdots & \vdots & \vdots & \ddots & \vdots \\
+                            \gamma_{N-1} & \gamma_{N-2} & \gamma_{N-3} & \cdots & \gamma_{1-N}
+                        \end{pmatrix}
+                    $\\[1cm]
+                    $
+                        \gamma(\theta) = \sum_{n} \gamma_n e^{i n \theta} \quad
+                        \begin{array}{rl}
+                            \gamma^{x} & = \gamma e^{i \theta} \\
+                            \gamma^{y} & = \gamma e^{-i \theta}
+                        \end{array}
+                    $
+                };
+                \TitoloNota{determinants}{Correlators from Toeplitz determinants}
+
+                \node (results) [below=3cm of determinants, nota] {
+                    \setlength\tabcolsep{0.75cm}
+                    \renewcommand{\arraystretch}{1.25}
+                    \begin{tabular}{rl}
+                        \textbf{topol. massless} & $f_Q \sim L$ \\[5pt]
+                        \hline
+                        \textbf{topol. massive} & \multirow{3}*{$f_Q \sim L^{3/4}$} \\[-5pt]
+                        critical             & \\[-5pt]
+                        trivial $\alpha < 1$ & \\
+                        \hline
+                        trivial $\alpha > 1$ & $f_Q \sim \text{const}$
+                    \end{tabular}
+                };
+                \TitoloNota{results}{Analytical results};
+            \end{tikzpicture}
+        \end{minipage}
     }
 
 
@@ -227,10 +273,27 @@ We show that the scaling of the QFI of strictly non-local observables can be use
             \begin{equation*}
                 H = J \sum_{i} \qty[
                     \bm{S}_i \cdot \bm{S}_{i+1}
-                    + \beta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )
+                    + \beta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
+                ]
+                = J^{\prime}  \sum_{i} \qty[
+                    \cos \theta \bm{S}_i \cdot \bm{S}_{i+1}
+                    + \sin \theta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
                 ]
             \end{equation*}
         }
+
+        \vspace*{0.5cm}
+
+        \centering
+        \begin{tikzpicture}
+            \node (SO) [nota] at (0,0) {
+                $\widetilde{S}_j = \left( e^{i \pi \sum_{i < j}  S^z_i } \right) S_j$,~~~
+                $\hat{O} = \sum_{j} \widetilde{S}_j^z $
+            };
+            \node (QFI) [nota, right=1cm of SO.north east, anchor=north west] { $f_Q[\ket{\text{gs}}, \hat{O}] \sim c L^b$ };
+            \TitoloNota{SO}{String order parameter}
+            \TitoloNota{QFI}{QFI density}
+        \end{tikzpicture}
 
         \begin{tikzfigure}
             \input{figures/blbq-phases.tex}

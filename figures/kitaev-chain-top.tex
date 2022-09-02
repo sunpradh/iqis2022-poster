@@ -1,0 +1,33 @@
+\begin{tikzpicture}[
+    font=\footnotesize,
+    cell/.style={ellipse, fill=Blue20, fill opacity=1, draw=black, thin, inner sep=0pt, minimum size=5pt, thick},
+    site/.style={circle, fill=Orange, draw=black, inner sep=0pt, minimum size=0.5cm},
+    edge/.style={circle, fill=Blue80, draw=black, inner sep=0pt, minimum size=0.5cm},
+    hop/.style={line width=3pt},
+    hop2/.style={line width=3pt}
+    ]
+    % variables
+    % \ncell # cells, \d cell distance, \s same-cell site dist, \ys = yshift of labels
+    \tikzmath{ \ncell=3; \cd = 3; \sd = 1; \ys = -4; }
+
+    % drawing
+    \foreach \i in {0,...,\ncell}
+    {
+        % sites
+        \draw (\i*\cd, 0)     node[anchor=center] (s\i) {};
+        \draw (\i*\cd+\sd, 0) node[anchor=center] (s\i+1) {};
+        % cells
+        \node[draw, cell, fit=(s\i) (s\i+1)] (cell\i) {};
+        \draw (s\i)   node[anchor=center, site] {};
+        \draw (s\i+1) node[anchor=center, site] {};
+    }
+    % outside hopping
+    \tikzmath{ \ncell = \ncell-1; }
+    \foreach \i[count=\j] in {0,...,\ncell} \draw[hop2] (s\i+1) -- (s\j);
+    \tikzmath{ \ncell = \ncell+1; }
+    \draw (s0.center)   node[anchor=center, edge] {};
+    \draw (s3+1.center) node[anchor=center, edge] {};
+
+    \draw [-Stealth, ultra thick] (s0) -- ++(0, -1.5) node [below, align=center] {\textbf{unpaired}\\Majorana};
+
+\end{tikzpicture}

@@ -2,10 +2,9 @@
     scale=2.5,
     font=\normalsize,
     punto/.style = {circle, inner sep=0pt, minimum size=5pt, fill=black},
-    massless/.style = {fill=Green, fill opacity=0.8},
-    trivial/.style = {fill=Blue20, fill opacity=0.8},
-    massive/.style = {fill=Orange, fill opacity=0.8},
-    etichetta/.style = {fill=white, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt},
+    massless/.style = {fill=Blue40, fill opacity=0.7},
+    trivial/.style = {fill=Grey10,  fill opacity=0.5},
+    massive/.style = {fill=Red,   fill opacity=0.5},
     etichetta spettro/.style = {above=-0.25cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
     ]
 
@@ -18,9 +17,8 @@
     \path[trivial] (-4,1) rectangle (-2,3);
     \path[trivial] (2,0) rectangle (4,3);
 
-
     % sector separator
-    \draw[dashed, line width=3pt] (-4.2,1) -- (4.4,1) node [pos=0.95, below, etichetta] {$\alpha = 1$};
+    \draw[dashed, line width=3pt] (-4.2,1) -- (4.4,1) node [below, etichetta] {$\alpha = 1$};
 
     % critical line
     \draw[line width=7] (2,0) -- (2,3);
@@ -28,8 +26,8 @@
     \draw[line width=7] (-2,1) -- (-2,3);
 
     %%% Axis
-    \draw[ultra thick, ->] (0,0) -- (0,3.2) node [above] {$\alpha$};
-    \draw[ultra thick, ->] (-4.2,0) -- (4.2,0) node [right] {$\mu$};
+    \draw[ultra thick, freccia] (0,0) -- (0,3.3) node [above] {$\alpha$};
+    \draw[ultra thick, freccia] (-4.2,0) -- (4.2,0) node [right] {$\mu$};
     \draw (2,0) node [below] {$2$};
     \draw (-2,0) node [below] {$-2$};
     \draw (0,0) node [below] {$0$};
@@ -41,35 +39,42 @@
     \node [etichetta] (trivial2) at (3,2.25)  {trivial};
     \node [etichetta] (massive)  at (-1,0.5)  {topol.~massive};
 
-    \draw[<-, ultra thick] (2,3.1) -- (2,3.3) node [above] {critical};
-    \draw[<-, ultra thick] (-2,3.1) -- (-2,3.3) node [above] {critical};
+    \draw[Stealth-, ultra thick] (2,3.1) -- (2,3.3) node [above] {critical};
+    \draw[Stealth-, ultra thick] (-2,3.1) -- (-2,3.3) node [above] {critical};
 
     \draw (-4, 2)    node [anchor=south, etichetta, rotate=90] {\textbf{Majorana}};
     \draw (-4, 0.5)  node [anchor=south, etichetta, rotate=90] {\textbf{Dirac}};
 
     % energy plots
-    \node[anchor=west] (MajSpec) at (5, 2) {\FrameImg{0.8}{figures/majorana_spectrum.pdf}};
-    \node[etichetta spettro] at (MajSpec.north) {Majorana sector, $\alpha = 2$};
-    \node[anchor=west] (DiracSpec) at (5, -1.3) {\FrameImg{0.8}{figures/dirac_spectrum.pdf}};
-    \node[etichetta spettro] at (DiracSpec.north) {Dirac sector, $\alpha = 0.7$};
+    \node[anchor=west] (DiracSpec) at (-5, -2.5) {\FrameImg{0.8}{figures/lrk_dirac_spectrum.pdf}};
+    \node[anchor=west] (MajSpec) at (0, -2.5) {\FrameImg{0.8}{figures/lrk_majorana_spectrum.pdf}};
+    \node[etichetta spettro] (DiracSpecLabel) at (DiracSpec.north) {\textbf{Dirac sector}~ $\alpha = 0.7$};
+    \node[etichetta spettro] (MajSpecLabel)   at (MajSpec.north) {\textbf{Majorana sector}~ $\alpha = 2$};
 
-    \draw[ultra thick] (massless.south east) edge[->, bend right=20] (MajSpec.west);
-    \draw[ultra thick] (massive.south east)  edge[->, bend right=20] (DiracSpec.west);
+    \draw[ultra thick] (massless.east) edge[Grey60, freccia, bend left=20] (MajSpecLabel.north);
+    \draw[ultra thick] (massive.west)  edge[Grey60, freccia, bend right=20] (DiracSpecLabel.north);
 
     % Annotate Majorana plot
-    \begin{scope}[xshift=5cm, yshift=2cm]
+    \begin{scope}[xshift=0cm, yshift=-2.5cm]
         \node (MasslessEdge) [etichetta, font=\tiny, anchor=south] at (2.5, -0.30) {\textbf{massless} edge state};
-        \draw[ultra thick, ->] (MasslessEdge.south) -- ++(0,-0.3);
+        \draw[ultra thick, -Stealth] (MasslessEdge.south) -- ++(0,-0.3);
         \node[font=\tiny] at (2.5, 0.95) {\textbf{topological}};
         \node[font=\tiny] at (1.0, 0.95) {trivial};
         \node[font=\tiny] at (4.0, 0.95) {trivial};
     \end{scope}
 
     % Annotate Dirac plot
-    \begin{scope}[xshift=5cm, yshift=-1.3cm]
+    \begin{scope}[xshift=-5cm, yshift=-2.5cm]
         \node (MassiveEdge) [etichetta, font=\tiny, anchor=south] at (2.5, 0.2) {\textbf{massive} edge state};
-        \draw[ultra thick, ->] (MassiveEdge.south west) -- ++(-0.17, -0.17);
+        \draw[ultra thick, -Stealth] (MassiveEdge.south west) -- ++(-0.17, -0.17);
         \node[font=\tiny] at (2.4, 0.95) {\textbf{topological}};
         \node[font=\tiny] at (4.0, 0.95) {trivial};
     \end{scope}
+
+    \node (trivial) [below=2cm of DiracSpec, anchor=north] {\input{figures/kitaev-chain-triv.tex}};
+    \node (topological) [right=0.6cm of trivial.north east, anchor=north west] {\input{figures/kitaev-chain-top.tex}};
+
+    \node at (trivial.north) [ etichetta spettro, above=0.4cm] {trivial};
+    \node at (topological.north) [ etichetta spettro, above=0.4cm] {topological};
+
 \end{tikzpicture}

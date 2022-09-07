@@ -5,7 +5,7 @@
     massless/.style = {fill=Blue40, fill opacity=0.7},
     trivial/.style = {fill=Grey10,  fill opacity=0.5},
     massive/.style = {fill=Red,   fill opacity=0.5},
-    etichetta spettro/.style = {above=-0.25cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
+    etichetta spettro/.style = {above=-0.25cm, font=\normalsize, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt}
     ]
 
     %%% Phases
@@ -46,8 +46,8 @@
     \draw (-4, 0.5)  node [anchor=south, etichetta, rotate=90] {\textbf{Dirac}};
 
     % energy plots
-    \node[anchor=west] (DiracSpec) at (-5, -2.5) {\FrameImg{0.8}{figures/lrk_dirac_spectrum.pdf}};
-    \node[anchor=west] (MajSpec) at (0, -2.5) {\FrameImg{0.8}{figures/lrk_majorana_spectrum.pdf}};
+    \node[anchor=west] (DiracSpec) at (-5, -3) {\FrameImg{0.8}{figures/lrk_dirac_spectrum.pdf}};
+    \node[anchor=west] (MajSpec) at (0, -3) {\FrameImg{0.8}{figures/lrk_majorana_spectrum.pdf}};
     \node[etichetta spettro] (DiracSpecLabel) at (DiracSpec.north) {\textbf{Dirac sector}~ $\alpha = 0.7$};
     \node[etichetta spettro] (MajSpecLabel)   at (MajSpec.north) {\textbf{Majorana sector}~ $\alpha = 2$};
 
@@ -55,7 +55,7 @@
     \draw[ultra thick] (massive.west)  edge[Grey60, freccia, bend right=20] (DiracSpecLabel.north);
 
     % Annotate Majorana plot
-    \begin{scope}[xshift=0cm, yshift=-2.5cm]
+    \begin{scope}[xshift=0cm, yshift=-3cm]
         \node (MasslessEdge) [etichetta, font=\tiny, anchor=south] at (2.5, -0.30) {\textbf{massless} edge state};
         \draw[ultra thick, -Stealth] (MasslessEdge.south) -- ++(0,-0.3);
         \node[font=\tiny] at (2.5, 0.95) {\textbf{topological}};
@@ -64,14 +64,14 @@
     \end{scope}
 
     % Annotate Dirac plot
-    \begin{scope}[xshift=-5cm, yshift=-2.5cm]
+    \begin{scope}[xshift=-5cm, yshift=-3cm]
         \node (MassiveEdge) [etichetta, font=\tiny, anchor=south] at (2.5, 0.2) {\textbf{massive} edge state};
         \draw[ultra thick, -Stealth] (MassiveEdge.south west) -- ++(-0.17, -0.17);
         \node[font=\tiny] at (2.4, 0.95) {\textbf{topological}};
         \node[font=\tiny] at (4.0, 0.95) {trivial};
     \end{scope}
 
-    \node (trivial) [below=2cm of DiracSpec, anchor=north] {\input{figures/kitaev-chain-triv.tex}};
+    \node (trivial) [below=3cm of DiracSpec, anchor=north] {\input{figures/kitaev-chain-triv.tex}};
     \node (topological) [right=0.6cm of trivial.north east, anchor=north west] {\input{figures/kitaev-chain-top.tex}};
 
     \node at (trivial.north) [ etichetta spettro, above=0.4cm] {trivial};

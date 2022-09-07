@@ -3,8 +3,8 @@
     25pt,
     a0paper,
     portrait,
-    colspace=2cm,
-    blockverticalspace=2cm
+    colspace=1.2cm,
+    blockverticalspace=1.2cm
 ]{tikzposter}
 
 % \usepackage{lmodern}
@@ -54,8 +54,8 @@
 %   Non è il titolo dell'abstract mandato.
 %   Il titolo originale: "Quantum Fisher information as a tool for detecting topological spaces"
 %   non ci sta nel riquadro
-\author{Sunny \textbf{Pradhan}, Federico \textbf{dell'Anna}, Elisa \textbf{Ercolessi}}
-\institute{University of Bologna}
+\author{\underline{Sunny \textbf{Pradhan}}, Federico \textbf{Dell'Anna}, Elisa \textbf{Ercolessi}}
+\institute{Department of Physics and Astronomy, University of Bologna, Italy\\INFN, Sezione di Bologna, Italy}
 
 
 
@@ -66,12 +66,12 @@
 
 \block[bodyverticalshift=5mm]{}{\Large
 We study the quantum Fisher information in one-dimensional models as a tool for measuring the multipartite entanglement, which can give valuable information about the existence of topological phases.
-We show that the scaling of quantum fisher information of strictly non-local observables can be used for characterizing the phase diagrams and, in particular, for detecting topological phases.
+We show that the scaling of quantum Fisher information of strictly non-local observables can be used for characterizing the phase diagrams and, in particular, for detecting topological phases.
 }
 
 
 \begin{columns}
-    \column{0.45}
+    \column{0.4}
     %----------------------------------------------------------------------------------------------------
     \myblock{MULTIPARTITE ENTANGLEMENT}{
         Pure state $\ket{\psi}$ of a quantum system with $N$ parts \\[5pt]
@@ -92,15 +92,12 @@ We show that the scaling of quantum fisher information of strictly non-local obs
 
             \InnerNote{each term $\ket{\phi_i}$ involves at most $k$ elements}
         }
-        \vspace*{0.5cm}
-        \begin{tikzpicture}
-            \node (A) at (0,0) [nota] {if $\ket{\psi}$ is not producible \\ by $(k-1)$-party entanglement};
-            \node (B) [right=1.5cm of A, nota] {$1$-party entangled\\($N$-separable)};
-            \node (C) [right=1.5cm of B, nota] {$N$-party entangled\\($1$-separable)};
-            \TitoloNota{B}{fully separable}
-            \TitoloNota{A}{genuine k-party entanglement}
-            \TitoloNota{C}{maximally entangled}
-        \end{tikzpicture}
+        \begin{center}
+            \begin{tikzpicture}
+                \node (A) at (0,0) [nota] {if $\ket{\psi}$ is not producible by $(k-1)$-party entanglement};
+                \TitoloNota{A}{genuine k-party entanglement}
+            \end{tikzpicture}
+        \end{center}
     }
 
 
@@ -108,7 +105,6 @@ We show that the scaling of quantum fisher information of strictly non-local obs
 
     %----------------------------------------------------------------------------------------------------
     \myblock{QUANTUM FISHER INFORMATION}{
-        % Unitary transformation with \textbf{unknown angle} $\theta$
         \Highlight{PHASE ESTIMATION}
         \begin{equation*}
             \rho \to \rho(\theta) = e^{-i \theta \hat{H}} \rho e^{i \theta \hat{H}}
@@ -130,9 +126,10 @@ We show that the scaling of quantum fisher information of strictly non-local obs
 
         \innerblock{Fisher information}{
             \begin{equation*}
-                F[\rho(\theta), \{\hat{E}_{\mu}\}] = \sum_{\mu} \frac{ [\partial_{\theta} P(\mu|\theta)]^2}{P(\mu | \theta)}
-                \qquad
-                P(\mu | \theta) = \Tr[\rho(\theta) \hat{E}_{\mu}]
+                F[\rho(\theta), \{\hat{E}_{\mu}\}]
+                \!=\! \sum_{\mu} \frac{ [\partial_{\theta} P(\mu|\theta)]^2}{P(\mu | \theta)},
+                \quad
+                P(\mu | \theta) \!=\! \Tr[\rho(\theta) \hat{E}_{\mu}]
             \end{equation*}
 
             \InnerNote{$P(\mu | \theta)$ probabilities of a measure with value $\mu$ given $\theta$}
@@ -156,27 +153,19 @@ We show that the scaling of quantum fisher information of strictly non-local obs
         \Highlight{Input state with k-party entanglement}~~~$\rho_{\text{k-ent}}$
 
         \vspace*{0.5cm}
-        Linear two-mode interferometer:
-        \vspace*{0.5cm}
-        \begin{equation*}
-            \hat{H}_{\text{lin}}
-            = \frac{1}{2} \sum_{j} \vec{n}_j \cdot \vec{\sigma}_j
-            = \frac{1}{2} \sum_{j} \qty( \alpha_j \sigma_j^ x + \beta_j \sigma_j^y + \gamma_j \sigma_j^z )
-        \end{equation*}
-
-        \vspace*{0.5cm}
-
 
         \innerblock{QFI Criterion}{
             \begin{equation*}
-                F_Q[\rho_{\text{k-ent}}, \hat{H}_{\text{lin}}] \leq k N
+                f_Q[\rho_{\text{k-ent}}, \hat{H}_{\text{lin}}] \leq k
+                \quad \text{where} \quad
+                \hat{H}_{\text{lin}} = \frac{1}{2} \sum_{j} \vec{n}_j \cdot \vec{\sigma}_j
             \end{equation*}
         }
         \begin{center}
             \begin{tikzpicture}
                 \node (density) [nota] at (0,0)  {$f_Q = F_Q / N$};
-                \node (sep) [nota, right=4cm of density] {$f_Q[\rho_{\text{sep}}, \hat{H}] \leq 1$};
-                \node (max) [nota, right=4cm of sep] {$f_Q[\rho_{\text{max}}, \hat{H}] \leq N$};
+                \node (sep) [nota, right=2cm of density] {$f_Q[\rho_{\text{sep}}, \hat{H}_{\text{lin}}] \leq 1$};
+                \node (max) [nota, right=2cm of sep] {$f_Q[\rho_{\text{max}}, \hat{H}_{\text{lin}}] \leq N$};
                 \TitoloNota{density}{QFI density}
                 \TitoloNota{sep}{fully separable}
                 \TitoloNota{max}{maximally entangled}
@@ -184,10 +173,19 @@ We show that the scaling of quantum fisher information of strictly non-local obs
         \end{center}
     }
 
+    \block[bodyverticalshift=0mm]{}{\normalsize
+        \textbf{REFERENCES}
+        \begin{itemize}
+            \item Pezzè, Smerzi ``\emph{Quantum theory of phase estimation}'' arXiv:1411.5164 (2014)
+            \item Vodola et al.~``\emph{Kitaev chains with long-range pairing}'' PRL 113, 156402 (2014)
+            \item Pezzè et al.~``\emph{Multipartite Entanglement in Topological Quantum Phases}'' PRL 119, 250401 (2017)
+            \item Kennedy, Tasaki ``\emph{Hidden symmetry breaking and the Haldane phase in $S=1$ quantum spin chains}'' Commun.~Math.~Phys 147 431-484 (1992)
+        \end{itemize}
+    }
 
 
     %----------------------------------------------------------------------------------------------------
-    \column{0.55}
+    \column{0.60}
     \myblock{LONG-RANGE KITAEV CHAIN}{
         \innerblock{one-dimensional $p$-wave superconductor}{
             \begin{equation*}
@@ -204,26 +202,27 @@ We show that the scaling of quantum fisher information of strictly non-local obs
 
         \vspace*{0.5cm}
 
-        {\centering
-        \begin{tikzpicture}
-            \node (JW) [nota] at (0,0) {
-                $\sigma_j^+ = c^{\dagger}_j e^{i \pi \sum_{i < j} c_i^{\dagger} c_i}$~~
-                $\sigma_j^- = e^{i \pi \sum_{i < j} c_i^{\dagger} c_i} c_j $
-            };
-            \node (NL) [nota, right=1cm of JW] {$\hat{H}_{\rho} = \sum_{j} \sigma^{\rho}_j, \quad \rho=x,y$};
-            \node (scaling) [nota, right=1cm of NL] {
-                $f_Q[\ket{\text{gs}}, \hat{H}_{\rho}] \sim \sum_{r=1}^{L} C_{\rho}(r) $
-            };
-            \TitoloNota{JW}{Jordan-Wigner transformation}
-            \TitoloNota{NL}{non-local operators}
-            \TitoloNota{scaling}{QFI from correlators}
-        \end{tikzpicture}}
+        \begin{center}
+            \begin{tikzpicture}
+                \node (JW) [nota] at (0,0) {
+                    $\sigma_j^+ = c^{\dagger}_j e^{i \pi \sum_{i < j} c_i^{\dagger} c_i}$~~
+                    $\sigma_j^- = e^{i \pi \sum_{i < j} c_i^{\dagger} c_i} c_j $
+                };
+                \node (NL) [nota, right=2cm of JW] {$\hat{H}_{\rho} = \sum_{j} \sigma^{\rho}_j, \quad \rho=x,y$};
+                \node (scaling) [nota, right=2cm of NL] {
+                    $f_Q[\ket{\text{gs}}, \hat{H}_{\rho}] \sim \sum_{r=1}^{L} C_{\rho}(r) $
+                };
+                \TitoloNota{JW}{Jordan-Wigner transformation}
+                \TitoloNota{NL}{non-local operators}
+                \TitoloNota{scaling}{QFI from correlators}
+            \end{tikzpicture}
+        \end{center}
 
         \vspace*{0.5cm}
-        \begin{minipage}[t]{25cm}
+        \begin{minipage}[c]{26.5cm}
             \input{figures/lrk-phases.tex}
         \end{minipage}
-        \begin{minipage}[t]{15cm}
+        \begin{minipage}[c]{15cm}
             \begin{tikzpicture}
                 \node [nota] (determinants) at (0, 0) {
                     $C_{\rho}(R) = \ev*{\sigma^{\rho}_1 \sigma^{\rho}_{1+R}} = \det T_R(\gamma^{\rho})$\\[1cm]
@@ -242,24 +241,30 @@ We show that the scaling of quantum fisher information of strictly non-local obs
                             \gamma^{x} & = \gamma e^{i \theta} \\
                             \gamma^{y} & = \gamma e^{-i \theta}
                         \end{array}
-                    $
+                    $\\[1cm]
+                    the $\gamma_n$s are computed directly \\
+                    from the couplings in $H$
                 };
                 \TitoloNota{determinants}{Correlators from Toeplitz determinants}
 
                 \node (results) [below=3cm of determinants, nota] {
+                    The scaling of $f_Q$ depends only on the\\
+                    topological properties of the function $\gamma(\theta)$.\\[0.5cm]
                     \setlength\tabcolsep{0.75cm}
                     \renewcommand{\arraystretch}{1.25}
                     \begin{tabular}{rl}
-                        \textbf{topol. massless} & $f_Q \sim L$ \\[5pt]
+                        \textbf{topological massless} & $f_Q \sim L$ \\[5pt]
                         \hline
-                        \textbf{topol. massive} & \multirow{3}*{$f_Q \sim L^{3/4}$} \\[-5pt]
+                        \textbf{topological massive} & \multirow{3}*{$f_Q \sim L^{3/4}$} \\[-5pt]
                         critical             & \\[-5pt]
                         trivial $\alpha < 1$ & \\
                         \hline
                         trivial $\alpha > 1$ & $f_Q \sim \text{const}$
                     \end{tabular}
+                    \\[0.5cm]
+                    Reproduces the numerical results\\ from [Pezzè 2017]
                 };
-                \TitoloNota{results}{Analytical results};
+                \TitoloNota{results}{Analytical results from Toeplitz determinants};
             \end{tikzpicture}
         \end{minipage}
     }
@@ -273,13 +278,15 @@ We show that the scaling of quantum fisher information of strictly non-local obs
             \begin{equation*}
                 H = J \sum_{i} \qty[
                     \bm{S}_i \cdot \bm{S}_{i+1}
-                    + \beta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
+                    - \beta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
                 ]
                 = J^{\prime}  \sum_{i} \qty[
                     \cos \theta \bm{S}_i \cdot \bm{S}_{i+1}
-                    + \sin \theta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
+                    - \sin \theta \qty( \bm{S}_i \cdot \bm{S}_{i+1} )^2
                 ]
             \end{equation*}
+
+            \InnerNote{most general $SU(2)$--invariant isotropic spin-$1$ Hamiltonian}
         }
 
         \vspace*{0.5cm}
@@ -290,7 +297,7 @@ We show that the scaling of quantum fisher information of strictly non-local obs
                 $\widetilde{S}_j = \left( e^{i \pi \sum_{i < j}  S^z_i } \right) S_j$,~~~
                 $\hat{O} = \sum_{j} \widetilde{S}_j^z $
             };
-            \node (QFI) [nota, right=1cm of SO.north east, anchor=north west] { $f_Q[\ket{\text{gs}}, \hat{O}] \sim c L^b$ };
+            \node (QFI) [nota, right=2cm of SO.north east, anchor=north west] { $f_Q[\ket{\text{gs}}, \hat{O}] \sim c L^b$ };
             \TitoloNota{SO}{String order parameter}
             \TitoloNota{QFI}{QFI density}
         \end{tikzpicture}

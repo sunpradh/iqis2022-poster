@@ -3,7 +3,8 @@
         font=\normalsize,
         dot/.style = {circle, inner sep=0pt, minimum size=10pt, fill=black},
         line width=2pt,
-        etichetta grafico/.style = {above=0.1cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt},
+        etichetta grafico/.style = {above=0.1cm, font=\normalsize, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt},
+        nota grafico/.style = {below=0.2cm, font=\small, fill=Grey10, fill opacity=0.9, text opacity=1, rounded corners, inner sep=5pt, align=center},
         sfondo grafico/.style = {fill=white, draw=black, thin, inner sep=5pt}
     ]
     \node (A) at (45:1)  [dot] {};
@@ -17,7 +18,7 @@
     \node[below]       at (D) {$-\pi/2$};
     \node[above left]  at (E) {$3 \pi / 4$};
     \node[right]       at (H) {Heisenberg};
-    \node[right]       at (K) {AKLT};
+    \node[right]       at (K) {\textbf{AKLT}};
 
     \draw (0,0) circle [radius=1];
 
@@ -41,23 +42,28 @@
 
     % Disegni diagrammi di fase
     \node (AKLTstate) [anchor=west] at (2.5, 0.2) {\input{figures/blbq_valence_aklt.tex} };
-    \node [etichetta grafico, above=-1.25cm] at (AKLTstate.north east) {AKLT state};
+    \node [etichetta grafico, above=-1.25cm] at (AKLTstate.north east) {AKLT state $\qty(\beta = -\frac{1}{3})$};
     \node (DimerState) [anchor=west] at (2.5, -0.8) {\input{figures/blbq_dimer_state.tex} };
     \node [etichetta grafico] at (DimerState.north east) {Dimer state};
 
     % Grafico QFI vs beta
     \node[anchor=north, sfondo grafico] at (0, -1.75) (VarBeta)
         {\input{figures/blbq_variable_beta.tex}};
-    \node[etichetta grafico] at (VarBeta.north)
-        {\textbf{QFI density ~vs~ $\bm{\beta}$}};
+    \node[etichetta grafico] at (VarBeta.north) {\textbf{QFI density ~vs~ $\bm{\beta}$}};
+    \node[nota grafico] at (VarBeta.south) {$f_Q$ grows inside the Haldane phase \\and is maximum on the AKLT point};
+
 
     % Grafici QFI nella fase Haldane e beta=1
-    \node[right=1cm of VarBeta.north east, anchor=north west, sfondo grafico]
+    \node[right=2cm of VarBeta.north east, anchor=north west, sfondo grafico]
         (Haldane) {\input{figures/blbq_scaling_haldane.tex} };
-    \node[right=1cm of Haldane.north east, anchor=north west, sfondo grafico]
-        (Beta1) {\input{figures/blbq_scaling_beta_1.tex} };
     \node[etichetta grafico] at (Haldane.north) {Inside \textbf{Haldane phase}};
+    \node[nota grafico] at (Haldane.south) {$f_Q$ scales \emph{linearly} inside \\the Haldane \emph{topological} phase};
+
+    % Grafici QFI nella fase Haldane e beta=1
+    \node[right=2cm of Haldane.north east, anchor=north west, sfondo grafico]
+        (Beta1) {\input{figures/blbq_scaling_beta_1.tex} };
     \node[etichetta grafico] at (Beta1.north) {\textbf{Critical point} $\beta = 1$ ($\theta = \pi/4$)};
+    \node[nota grafico] at (Beta1.south) {$f_Q$ scales with a \emph{power-law} for \\a quantum phase transition point};
 
 \end{tikzpicture}
 

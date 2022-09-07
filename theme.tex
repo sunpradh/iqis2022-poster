@@ -172,14 +172,16 @@
     linewidth=4pt,
     innersep=1.5cm,
     titletotopverticalspace=-1mm,
-    titletoblockverticalspace=20mm
+    titletoblockverticalspace=15mm
 }{
     \begin{scope}[line width=\titlelinewidth]
         \fill[
-            fill=Black
+            fill=Foreground
         ] (\titleposleft, \titleposbottom) rectangle (\titleposright, \titlepostop);
         \draw[color=titlebgcolor, line width=10, shorten <=-3pt, shorten >=-3pt]
             (\titleposleft, \titleposbottom) -- (\titleposright, \titleposbottom);
+        \path (\titleposleft, \titlepostop) -- ++(0, -1) node [anchor=north west, inner sep=20pt] {\includegraphics[scale=1.2]{figures/unibo_neg.pdf}};
+        \path (\titleposright, \titlepostop) -- ++(-0.5, -2) node [anchor=north east, inner sep=20pt] {\includegraphics[scale=0.6]{figures/infn_logo_neg.pdf}};
     \end{scope}
 }
 \usetitlestyle{MyTitle}
@@ -187,10 +189,12 @@
 \settitle{
     \centering
     \vbox{
-        \vspace*{1cm}
+        \vspace*{0.25cm}
         \centering \color{titlefgcolor} {\sffamily \bfseries \Huge \addfontfeature{LetterSpace=5.0} \@title \par}
-        \vspace*{1cm}
-        {\sffamily \Large \@author \hspace{1cm} ({\slshape \@institute})}
+        \vspace*{0.5cm}
+        {\sffamily \Large \@author}\\
+        \vspace*{0.25cm}
+        {\sffamily {\slshape \@institute}}
     }
 }
 
